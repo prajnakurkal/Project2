@@ -92,4 +92,10 @@ public abstract class Account {
 	 * @return decimal monthly fee value
 	 */
 	public abstract double monthlyFee();
+	
+	/**
+	 * calculates new balance for each of the accounts after the fees and stuff
+	 * @return new balance value
+	 */
+	public abstract double getNewBalance();
 }

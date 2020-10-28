@@ -44,7 +44,9 @@ public class TransactionManager {
         // for input
         Scanner input = new Scanner(System.in);
         System.out.println("Transaction processing starts.....");
+        
         AccountDatabase accountDatabase = new AccountDatabase();
+        
         while (input.hasNext()) {
             String commandTotal = input.nextLine();
 
@@ -84,8 +86,10 @@ public class TransactionManager {
                         }
                         else if(command.equals(printAccountInfoByDate)){
                             accountDatabase.printByDateOpen();
-                        } else {
-                            accountDatabase.printByLastName();
+                        } else if(command.equals(printAccountInfoByLastName)) {
+                        	accountDatabase.printByLastName();
+                        //} else {
+                            //accountDatabase.printByLastName();
                         }
                         continue;
                     }
@@ -119,9 +123,9 @@ public class TransactionManager {
 
             if(command.charAt(0) == 'C'){
                 //find account
-                if(command.equals(closeChecking)){
-
-                } else if (command.equals(closeMoneyMarket)){
+                if(command.equals(closeChecking)) {
+                	
+                } else if (command.equals(closeMoneyMarket)) {
 
                 } else {
 
@@ -163,7 +167,7 @@ public class TransactionManager {
 
             //Handle Deposit
             if(command.charAt(0) == 'D'){
-
+            	
                 continue;
             }
 
@@ -174,7 +178,6 @@ public class TransactionManager {
 
                 continue;
             }
-
             //Handle Open
             //Get Date
             int month = -1;
@@ -213,7 +216,10 @@ public class TransactionManager {
                 System.out.println(accountDate.toString() + "is not a valid date!");
                 continue;
             }
-
+            String accountAdded = "Account opened and added to the database.";
+            String accountExists = "Account is already in the database.";
+            boolean checkAccExists;
+            
             //Check for command OM that no other inputs given
             if(command.equals("OM") && parseCommand.hasNext()){
                 System.out.println("Input data type mismatch.");
@@ -223,16 +229,20 @@ public class TransactionManager {
             //Handle OM
             if(command.equals(openMoneyMarket)){
                 MoneyMarket currentMoneyMarketAccount = new MoneyMarket(currentProfile, money, accountDate);
+                checkAccExists = accountDatabase.add(currentMoneyMarketAccount);
+                if(checkAccExists)
+                	System.out.println(accountAdded);
+                else
+                	System.out.println(accountExists);
                 continue;
             }
 
             //Handle other Open Account commands
-            //Get isLoyal
-
-            boolean isLoyal = false;
-
+            //Get either the checkings or savings boolean data field
+            boolean checkingSavingBoolean = false;
+            
             try{
-                isLoyal = parseCommand.nextBoolean();
+                checkingSavingBoolean = parseCommand.nextBoolean();
 
             } catch (InputMismatchException e) {
                 System.out.println("Input data type mismatch.");
@@ -246,6 +256,26 @@ public class TransactionManager {
             //Check if other inputs, if there are then error
             if(parseCommand.hasNext()){
                 System.out.println("Input data type mismatch.");
+                continue;
+            }
+            //Handle OC
+            if(command.equals(openChecking)){
+                Checking currentChecking = new Checking(currentProfile, money, accountDate, checkingSavingBoolean);
+                checkAccExists = accountDatabase.add(currentChecking);
+                if(checkAccExists)
+                	System.out.println(accountAdded);
+                else
+                	System.out.println(accountExists);
+                continue;
+            }
+            //Handle OS
+            if(command.equals(openSavings)){
+                Savings currentSavings = new Savings(currentProfile, money, accountDate, checkingSavingBoolean);
+                checkAccExists = accountDatabase.add(currentSavings);
+                if(checkAccExists)
+                	System.out.println(accountAdded);
+                else
+                	System.out.println(accountExists);
                 continue;
             }
         }

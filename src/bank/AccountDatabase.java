@@ -1,4 +1,5 @@
 package bank;
+import java.text.DecimalFormat;
 
 /**
  * This class stores all the possible accounts that are registered with the bank
@@ -148,16 +149,28 @@ public class AccountDatabase {
 	 */
 	public void printByDateOpen() { 
 		sortByDateOpen();
-		for(int i = 0; i < size; i++)
+		DecimalFormat df = new DecimalFormat("0.00");
+		for(int i = 0; i < size; i++) {
 			System.out.println(accounts[i]);
+			double interest = accounts[i].monthlyInterest();
+			double fee = accounts[i].monthlyFee();
+			double newBalance = accounts[i].getNewBalance();
+			System.out.println("-interest: $ " + df.format(interest) + "\n" + "-fee: $ " + df.format(fee) + "\n" + "-new balance: $ " + df.format(newBalance));
+		}
 	}
 	/**
 	 * first sorts by last name, and then prints the database
 	 */
 	public void printByLastName() { 
 		sortByLastName();
-		for(int i = 0; i < size; i++)
+		DecimalFormat df = new DecimalFormat("0.00");
+		for(int i = 0; i < size; i++) {
 			System.out.println(accounts[i]);
+			double interest = accounts[i].monthlyInterest();
+			double fee = accounts[i].monthlyFee();
+			double newBalance = accounts[i].getBalance();
+			System.out.println("-interest: $ " + df.format(interest) + "\n" + "-fee: $ " + df.format(fee) + "\n" + "-new balance: $ " + df.format(newBalance));
+		}
 	}
 	/**
 	 * prints the database 

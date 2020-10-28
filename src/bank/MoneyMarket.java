@@ -15,16 +15,16 @@ public class MoneyMarket extends Account {
 	 */
 	public MoneyMarket(Profile holder, double balance, Date dateOpen) {
 		super(holder, balance, dateOpen);
-		withdrawls = 0;
+		this.withdrawls = 0;
 	}
 
-    /**
+	/**
      *determines monthly interest
-     *@return double
+     *@return monthly interest for checking account or 0
      */
     @Override
     public double monthlyInterest() {
-    	return (2020-this.getDate().getYear())*0.65;
+    	return ( (0.65/100) / 12 ) * this.getBalance();
     }
 
     /**
@@ -34,13 +34,21 @@ public class MoneyMarket extends Account {
     @Override
     public double monthlyFee() {
     
-        if(this.getBalance()>2500)
-        {
-            return this.getBalance()-12;
-        }
-        return 0;
+        if(withdrawls >= 6 || this.getBalance() < 2500)
+            return 12;
+        else
+        	return 0;
     }
-
+    /**
+	 * calculates new balance for each of the accounts after the fees and stuff
+	 * @return new balance value
+	 */
+	public double getNewBalance() {
+		double interest = this.monthlyInterest();
+		double fee = this.monthlyFee();
+		double newBalance = (this.getBalance() - fee) + interest;
+		return newBalance;
+	}
 	/**
 	 * accessor method for withdrawls
 	 * @return withdrawls value
@@ -53,7 +61,31 @@ public class MoneyMarket extends Account {
 	 * @param withdrawals
 	 * sets the withdrawls to a parameterized value
 	 */
-	public void setWithdrawals(int withdrawals) {
-		this.withdrawls = withdrawals;
+	public void incrementWithdrawls() {
+		this.withdrawls++;
+	}
+	/**
+	 * checks to see if the data fields of two Account objects are equal
+	 * @return true if they are equal, false otherwise
+	 */
+	 @Override
+	public boolean equals(Object obj) {
+		if(obj instanceof Account && obj instanceof Savings) {
+		MoneyMarket acc = (MoneyMarket) obj;
+		if(super.equals(acc) && this.withdrawls == acc.withdrawls)
+			return true;
+		else
+			return false;
+		}
+		return false;
+	}
+	/**
+	 * returns the string representation of the account
+	 * @return string of holder, balance, and date
+	 */
+	@Override
+	public String toString() { 
+		String numWithdrawls = "*" + withdrawls + "withdrawls*";
+		return "*MoneyMarket*" + super.toString() + numWithdrawls;
 	}
 }

@@ -16,25 +16,24 @@ public class Savings extends Account {
 	 */
 	public Savings(Profile holder, double balance, Date dateOpen, boolean isLoyal){
 		super(holder, balance, dateOpen);
-		isLoyal = true;
+		this.isLoyal = isLoyal;
 	}
     /**
      * determines monthly interest
      *@return monthly interest or 0 if an exception is caught
      */
     @Override
-    public double monthlyInterest() {
-        try
-        {
-            
-         return (2020-this.getDate().getYear())*0.25;
-        }
-         catch(Exception e)
-        {
-            System.out.println("Number Format Exception");
-    }
-    return 0;
-
+    public double monthlyInterest() {   
+		double interest = 0;
+		if(isLoyal == true) {
+			interest = (.35/100)/12 * this.getBalance();
+			return interest;
+		}
+			
+		else {
+			interest = (.35/100)/12 * this.getBalance();
+			return interest;
+		}
     }
 
 	/**
@@ -43,17 +42,45 @@ public class Savings extends Account {
 	 */
 	@Override
 	public double monthlyFee() {
-	    try{
-	    if(this.getBalance()>300)
-	    {
-	        return this.getBalance()-5;
-	    }
-	    }
-	    catch(Exception e)
-	    {
-	        System.out.println("Number Format Exception");
-	        }
-	        return 0;
-	    }
+		if(this.getBalance() < 300)
+			return 5;
+    return 0;
+    }
+	/**
+	 * calculates new balance for each of the accounts after the fees and stuff
+	 * @return new balance value
+	 */
+	public double getNewBalance() {
+		double interest = this.monthlyInterest();
+		double fee = this.monthlyFee();
+		double newBalance = (this.getBalance() - fee) + interest;
+		return newBalance;
 	}
+	/**
+	 * checks to see if the data fields of two Account objects are equal
+	 * @return true if they are equal, false otherwise
+	 */
+	 @Override
+	public boolean equals(Object obj) {
+		if(obj instanceof Account && obj instanceof Savings) {
+		Savings acc = (Savings) obj;
+		if(super.equals(acc) && this.isLoyal == acc.isLoyal)
+			return true;
+		else
+			return false;
+		}
+		return false;
+	}
+	/**
+	 * returns the string representation of the account
+	 * @return string of holder, balance, and date
+	 */
+	@Override
+	public String toString() { 
+		String typeOfSavings = "";
+		if(isLoyal == true)
+			typeOfSavings += "*special savings account*";
+		return "*Savings*" + super.toString() + typeOfSavings;
+	}
+}
 	
