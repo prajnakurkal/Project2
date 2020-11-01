@@ -60,7 +60,7 @@ public class Checking extends Account {
 	public boolean equals(Object obj) {
 		if(obj instanceof Account && obj instanceof Checking) {
 		Checking acc = (Checking) obj;
-		if(super.equals(acc) && this.directDep == acc.directDep)
+		if(super.equals(acc)) //&& this.directDep == acc.directDep)
 			return true;
 		else
 			return false;

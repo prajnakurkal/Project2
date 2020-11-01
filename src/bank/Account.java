@@ -75,7 +75,7 @@ public abstract class Account {
 	public boolean equals(Object obj) {
 		if(obj instanceof Account) {
 		Account acc = (Account) obj;
-		if(this.holder.equals(acc.holder) && this.balance == acc.balance && this.dateOpen.equals(acc.dateOpen))
+		if(this.holder.equals(acc.holder)) //&& this.balance == acc.balance && this.dateOpen.equals(acc.dateOpen))
 			return true;
 		else
 			return false;

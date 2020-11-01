@@ -64,7 +64,7 @@ public class Savings extends Account {
 	public boolean equals(Object obj) {
 		if(obj instanceof Account && obj instanceof Savings) {
 		Savings acc = (Savings) obj;
-		if(super.equals(acc) && this.isLoyal == acc.isLoyal)
+		if(super.equals(acc)) //&& this.isLoyal == acc.isLoyal)
 			return true;
 		else
 			return false;

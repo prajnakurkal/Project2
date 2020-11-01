@@ -81,7 +81,7 @@ public class AccountDatabase {
 	 * deposits a certain amount into a desired account. also checks to see if that account exists
 	 * @param account that needs money to be deposited
 	 * @param amount the specific amount deposited
-	 * @return true if the deposti went through, false otherwise
+	 * @return true if the deposit went through, false otherwise
 	 */
 	public boolean deposit(Account account, double amount) {
 		int found = find(account);
@@ -168,7 +168,7 @@ public class AccountDatabase {
 			System.out.println(accounts[i]);
 			double interest = accounts[i].monthlyInterest();
 			double fee = accounts[i].monthlyFee();
-			double newBalance = accounts[i].getBalance();
+			double newBalance = accounts[i].getNewBalance();
 			System.out.println("-interest: $ " + df.format(interest) + "\n" + "-fee: $ " + df.format(fee) + "\n" + "-new balance: $ " + df.format(newBalance));
 		}
 	}

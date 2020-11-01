@@ -124,11 +124,27 @@ public class TransactionManager {
             if(command.charAt(0) == 'C'){
                 //find account
                 if(command.equals(closeChecking)) {
+                	Checking closer = new Checking(currentProfile, 0.0, null, false);
+                	boolean removed = accountDatabase.remove(closer);
+                	if(removed)
+                		System.out.println("Account removed from database");
+                	else
+                		System.out.println("Account could not be found/removed from the database");
                 	
                 } else if (command.equals(closeMoneyMarket)) {
-
-                } else {
-
+                	MoneyMarket closer = new MoneyMarket(currentProfile, 0.0, null);
+                	boolean removed = accountDatabase.remove(closer);
+                	if(removed)
+                		System.out.println("Account removed from database");
+                	else
+                		System.out.println("Account could not be found/removed from the database");
+                } else if(command.equals(closeSavings)){
+                	Savings closer = new Savings(currentProfile, 0.0, null, false);
+                	boolean removed = accountDatabase.remove(closer);
+                	if(removed)
+                		System.out.println("Account removed from database");
+                	else
+                		System.out.println("Account could not be found/removed from the database");
                 }
 
                 continue;
@@ -145,7 +161,7 @@ public class TransactionManager {
                     System.out.println("Input data type mismatch.");
                     continue;
                 }
-                money = parseCommand.nextDouble();
+            money = parseCommand.nextDouble();
             }catch(NumberFormatException e){
                 System.out.println("Input data type mismatch.");
                 continue;
@@ -167,7 +183,30 @@ public class TransactionManager {
 
             //Handle Deposit
             if(command.charAt(0) == 'D'){
-            	
+            	if(command.equals(depositChecking)) {
+	            	Checking dep = new Checking(currentProfile, 0.0, null, false);
+	            	boolean deposited = accountDatabase.deposit(dep, money);
+	            	if(deposited)
+	            		System.out.println("$" + money + " deposited into account");
+	            	else
+	            		System.out.println("could not deposit into account"); 
+	            }
+            	else if(command.equals(depositSavings)) {
+	            	Savings dep = new Savings(currentProfile, 0.0, null, false);
+	            	boolean deposited = accountDatabase.deposit(dep, money);
+	            	if(deposited)
+	            		System.out.println("$" + money + " deposited into account");
+	            	else
+	            		System.out.println("could not deposit into account"); 
+	            }
+            	else if(command.equals(depositMoneyMarket)) {
+	            	MoneyMarket dep = new MoneyMarket(currentProfile, 0.0, null);
+	            	boolean deposited = accountDatabase.deposit(dep, money);
+	            	if(deposited)
+	            		System.out.println("$" + money + " deposited into account");
+	            	else
+	            		System.out.println("could not deposit into account"); 
+	            }
                 continue;
             }
 
@@ -175,7 +214,36 @@ public class TransactionManager {
 
             //Handle Withdraw
             if(command.charAt(0) == 'W'){
-
+            	if(command.equals(withdrawChecking)) {
+	            	Checking withdraw = new Checking(currentProfile, 0.0, null, false);
+	            	int withdrawls = accountDatabase.withdrawal(withdraw, money);
+	            	if(withdrawls == 1)
+	            		System.out.println("account could not be found");
+	            	else if(withdrawls == 1)
+	            		System.out.println("insufficient funds"); 
+	            	else
+	            		System.out.println("$" + money + "withdrew");
+	            }
+            	else if(command.equals(depositSavings)) {
+            		Savings withdraw = new Savings(currentProfile, 0.0, null, false);
+	            	int withdrawls = accountDatabase.withdrawal(withdraw, money);
+	            	if(withdrawls == 1)
+	            		System.out.println("account could not be found");
+	            	else if(withdrawls == 1)
+	            		System.out.println("insufficient funds"); 
+	            	else
+	            		System.out.println("$" + money + "withdrew"); 
+	            }
+            	else if(command.equals(depositMoneyMarket)) {
+            		MoneyMarket withdraw = new MoneyMarket(currentProfile, 0.0, null);
+	            	int withdrawls = accountDatabase.withdrawal(withdraw, money);
+	            	if(withdrawls == 1)
+	            		System.out.println("account could not be found");
+	            	else if(withdrawls == 1)
+	            		System.out.println("insufficient funds"); 
+	            	else
+	            		System.out.println("$" + money + "withdrew"); 
+	            }
                 continue;
             }
             //Handle Open
