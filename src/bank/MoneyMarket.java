@@ -70,7 +70,7 @@ public class MoneyMarket extends Account {
 	 */
 	 @Override
 	public boolean equals(Object obj) {
-		if(obj instanceof Account && obj instanceof Savings) {
+		if(obj instanceof Account && obj instanceof MoneyMarket) {
 		MoneyMarket acc = (MoneyMarket) obj;
 		if(super.equals(acc)) //&& this.withdrawls == acc.withdrawls)
 			return true;

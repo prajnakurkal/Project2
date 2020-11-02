@@ -217,32 +217,32 @@ public class TransactionManager {
             	if(command.equals(withdrawChecking)) {
 	            	Checking withdraw = new Checking(currentProfile, 0.0, null, false);
 	            	int withdrawls = accountDatabase.withdrawal(withdraw, money);
-	            	if(withdrawls == 1)
+	            	if(withdrawls == -1)
 	            		System.out.println("account could not be found");
 	            	else if(withdrawls == 1)
 	            		System.out.println("insufficient funds"); 
 	            	else
-	            		System.out.println("$" + money + "withdrew");
+	            		System.out.println("$" + money + " withdrew");
 	            }
-            	else if(command.equals(depositSavings)) {
+            	else if(command.equals(withdrawSavings)) {
             		Savings withdraw = new Savings(currentProfile, 0.0, null, false);
 	            	int withdrawls = accountDatabase.withdrawal(withdraw, money);
-	            	if(withdrawls == 1)
+	            	if(withdrawls == -1)
 	            		System.out.println("account could not be found");
 	            	else if(withdrawls == 1)
 	            		System.out.println("insufficient funds"); 
 	            	else
-	            		System.out.println("$" + money + "withdrew"); 
+	            		System.out.println("$" + money + " withdrew"); 
 	            }
-            	else if(command.equals(depositMoneyMarket)) {
+            	else if(command.equals(withdrawMoneyMarket)) {
             		MoneyMarket withdraw = new MoneyMarket(currentProfile, 0.0, null);
 	            	int withdrawls = accountDatabase.withdrawal(withdraw, money);
-	            	if(withdrawls == 1)
+	            	if(withdrawls == -1)
 	            		System.out.println("account could not be found");
 	            	else if(withdrawls == 1)
 	            		System.out.println("insufficient funds"); 
 	            	else
-	            		System.out.println("$" + money + "withdrew"); 
+	            		System.out.println("$" + money + " withdrew"); 
 	            }
                 continue;
             }
